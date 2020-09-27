@@ -1,0 +1,32 @@
+name: 'olm-bundle'
+description: 'Update OLM bundle with new bundle versions.'
+inputs:
+  manifestDir:
+    description: 'Directory containing all the CRDs and CSVs for a bundle.'
+  outputDir:
+    description: 'Bundle version directory. Created if not exists.'
+    required: true
+  channels:
+    description: 'Channels of the bundle. Comma separated channel names.'
+    required: true
+    default: stable
+  package:
+    description: 'OLM package name.'
+    required: true
+  operatorRepo:
+    description: 'Operator git repo that contains the OLM manifests.'
+  operatorBranch:
+    description: 'Operator git repo branch.'
+  operatorManifestsDir:
+    description: 'Manifests dir in the operator git repo.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    - MANIFEST_DIR: ${{ inputs.manifestDir }}
+    - OUTPUT_DIR: ${{ inputs.outputDir }}
+    - CHANNELS: ${{ inputs.channels }}
+    - PACKAGE: ${{ inputs.package }}
+    - OPERATOR_REPO: ${{ inputs.operatorRepo }}
+    - OPERATOR_BRANCH: ${{ inputs.operatorBranch }}
+    - OPERATOR_MANIFESTS_DIR: ${{ inputs.operatorManifestsDir }}
