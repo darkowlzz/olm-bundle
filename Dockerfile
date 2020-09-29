@@ -1,7 +1,11 @@
 FROM ubuntu:20.04
 COPY generate.sh /generate.sh
-COPY bin/opm /usr/local/bin
-RUN apt-get update && apt-get install git -y
+# COPY bin/opm /usr/local/bin
+RUN apt-get update && apt-get install git curl -y
+# Add temporary build fix.
+# TODO: Use multistate build.
+RUN curl -Lo /usr/local/bin/opm https://github.com/operator-framework/operator-registry/releases/download/v1.14.2/linux-amd64-opm && \
+	chmod +x /usr/local/bin/opm
 
 WORKDIR /github/workspace
 
