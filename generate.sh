@@ -69,7 +69,7 @@ if [ -z "$MANIFESTS_DIR" ]; then
 	git clone $OPERATOR_REPO $CLONE_DIR --depth=1 --branch $OPERATOR_BRANCH
 	cp -r "$CLONE_DIR/$OPERATOR_MANIFESTS_DIR" manifests
 	rm -rf $CLONE_DIR
-	MANIFESTS_DIR=manifests
+	MANIFESTS_DIR=$(pwd)/manifests
 fi
 
 if [ -z "$MANIFESTS_DIR" ]; then
