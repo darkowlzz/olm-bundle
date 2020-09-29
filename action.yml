@@ -23,10 +23,10 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    - MANIFEST_DIR: ${{ inputs.manifestDir }}
-    - OUTPUT_DIR: ${{ inputs.outputDir }}
-    - CHANNELS: ${{ inputs.channels }}
-    - PACKAGE: ${{ inputs.package }}
-    - OPERATOR_REPO: ${{ inputs.operatorRepo }}
-    - OPERATOR_BRANCH: ${{ inputs.operatorBranch }}
-    - OPERATOR_MANIFESTS_DIR: ${{ inputs.operatorManifestsDir }}
+    MANIFEST_DIR: ${{ inputs.manifestDir }}
+    OUTPUT_DIR: ${{ inputs.outputDir }}
+    CHANNELS: ${{ inputs.channels }}
+    PACKAGE: ${{ inputs.package }}
+    OPERATOR_REPO: ${{ inputs.operatorRepo }}
+    OPERATOR_BRANCH: ${{ inputs.operatorBranch }}
+    OPERATOR_MANIFESTS_DIR: ${{ inputs.operatorManifestsDir }}
