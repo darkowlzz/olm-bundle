@@ -105,3 +105,6 @@ pushd $BUNDLE_DIR
 	echo "Renaming bundle.Dockerfile to $DOCKERFILE_PATH"
 	mv bundle.Dockerfile $DOCKERFILE_PATH
 popd
+
+# Cleanup.
+rm -rf $MANIFESTS_DIR
