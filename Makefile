@@ -5,7 +5,10 @@ OPM_VERSION=v1.14.2
 ARCH=amd64
 
 docker-build: opm
-	docker build . -t ${IMG}
+	docker build -t ${IMG} \
+		--build-arg USER_ID=$(shell id -u) \
+		--build-arg GROUP_ID=$(shell id -g) \
+		.
 
 opm:
 	mkdir -p bin
