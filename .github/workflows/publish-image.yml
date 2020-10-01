@@ -1,0 +1,36 @@
+name: Publish Image
+
+on:
+  workflow_dispatch:
+    # Enable manual trigger of this action.
+    inputs:
+      imageTag:
+        description: Container image tag.
+        default: test
+        required: true
+
+jobs:
+  publish-image:
+    runs-on: ubuntu-latest
+    name: Publish container image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+      - name: Build and push container image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/darkowlzz/olm-bundle:${{ github.event.inputs.imageTag }}
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
