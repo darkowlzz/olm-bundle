@@ -1,7 +1,7 @@
 name: 'olm-bundle'
 description: 'Update OLM bundle with new bundle versions.'
 inputs:
-  manifestDir:
+  manifestsDir:
     description: 'Directory containing all the CRDs and CSVs for a bundle.'
   outputDir:
     description: 'Bundle version directory. Created if not exists.'
@@ -23,7 +23,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    MANIFEST_DIR: ${{ inputs.manifestDir }}
+    MANIFESTS_DIR: ${{ inputs.manifestsDir }}
     OUTPUT_DIR: ${{ inputs.outputDir }}
     CHANNELS: ${{ inputs.channels }}
     PACKAGE: ${{ inputs.package }}

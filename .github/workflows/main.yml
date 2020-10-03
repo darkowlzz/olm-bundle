@@ -1,0 +1,17 @@
+name: Action in a workflow
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  action_in_workflow:
+    runs-on: ubuntu-latest
+    name: Run action in a workflow
+    steps:
+    - uses: actions/checkout@v2
+    - name: olm-bundle action
+      uses: ./ # Uses the action in the root directory.
+      with:
+        manifestsDir: testdata/bundle/manifests
+        outputDir: testdata/memcached/0.0.2
+        channels: stable,beta
+        package: memcached
