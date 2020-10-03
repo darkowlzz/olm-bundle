@@ -1,0 +1,12 @@
+name: Test
+
+on: [workflow_dispatch, push, pull_request]
+
+jobs:
+  test:
+    name: bundle generation test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run test.sh
+        run: ./test.sh
