@@ -1,5 +1,8 @@
 name: 'olm-bundle'
 description: 'Update OLM bundle with new bundle versions.'
+branding:
+  icon: box
+  color: red
 inputs:
   manifestsDir:
     description: 'Directory containing all the CRDs and CSVs for a bundle.'
