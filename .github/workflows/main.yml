@@ -17,4 +17,4 @@ jobs:
         channels: stable,beta
         package: memcached
     - name: Tree output
-      run: echo "Tree ${{ steps.bundle.outputs.tree }}"
+      run: echo "${{ steps.bundle.outputs.tree }}"
