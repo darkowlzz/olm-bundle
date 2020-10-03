@@ -45,6 +45,11 @@ set -e
 # 1. Remove replaces field from the given CSV file.
 # 2. Support multiple channels with default channel option.
 
+# Disable cleanup by default to avoid unexpected data deletion. This is only
+# enabled automatically when MANIFESTS_DIR is not used and OPERATOR_REPO is
+# provided to clone the repo and extract the manifests.
+CLEANUP=false
+
 if [ -z "$MANIFESTS_DIR" ]; then
 	echo "No MANIFESTS_DIR specified, trying to extract bundle from git repo..."
 
@@ -70,6 +75,7 @@ if [ -z "$MANIFESTS_DIR" ]; then
 	cp -r "$CLONE_DIR/$OPERATOR_MANIFESTS_DIR" manifests
 	rm -rf $CLONE_DIR
 	MANIFESTS_DIR=$(pwd)/manifests
+	CLEANUP=true
 fi
 
 if [ -z "$MANIFESTS_DIR" ]; then
@@ -107,4 +113,6 @@ pushd $BUNDLE_DIR
 popd
 
 # Cleanup.
-rm -rf $MANIFESTS_DIR
+if [ "$CLEANUP" = true ]; then
+	rm -rf $MANIFESTS_DIR
+fi
