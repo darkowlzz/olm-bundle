@@ -98,6 +98,11 @@ if [ -z "$PACKAGE" ]; then
 	exit 1
 fi
 
+# If MANIFESTS_DIR is not absolute path, prepend PWD to make it absolute.
+if [[ ! "$MANIFESTS_DIR" = /* ]]; then
+	MANIFESTS_DIR=$(pwd)/$MANIFESTS_DIR
+fi
+
 VERSION="$(basename $OUTPUT_DIR)"
 BUNDLE_DIR="$(dirname $OUTPUT_DIR)"
 DOCKERFILE_PATH="bundle-$VERSION.Dockerfile"
