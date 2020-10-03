@@ -9,9 +9,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: olm-bundle action
+      id: bundle
       uses: ./ # Uses the action in the root directory.
       with:
         manifestsDir: testdata/bundle/manifests
         outputDir: testdata/memcached/0.0.2
         channels: stable,beta
         package: memcached
+    - name: Tree output
+      run: echo "Tree ${{ steps.bundle.outputs.tree }}"
