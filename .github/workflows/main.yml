@@ -1,11 +1,11 @@
-name: Action in a workflow
+name: Action in workflow
 
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   action_in_workflow:
     runs-on: ubuntu-latest
-    name: Run action in a workflow
+    name: Run action in workflow
     steps:
     - uses: actions/checkout@v2
     - name: olm-bundle action

@@ -1,6 +1,7 @@
 # olm-bundle
 
-![Test](https://github.com/darkowlzz/olm-bundle/workflows/Test/badge.svg)
+[![Test](https://github.com/darkowlzz/olm-bundle/workflows/Test/badge.svg)](https://github.com/darkowlzz/olm-bundle/actions?query=workflow%3ATest)
+[![Action in workflow](https://github.com/darkowlzz/olm-bundle/workflows/Action%20in%20workflow/badge.svg)](https://github.com/darkowlzz/olm-bundle/actions?query=workflow%3A%22Action+in+workflow%22)
 
 Github Action to generate
 [Operator Lifecycle Manager](olm.operatorframework.io/) bundle format
@@ -131,7 +132,7 @@ bundle generation depends on `opm`. Ensure that it's available in the $PATH.
 Run:
 
 ```console
-$ MANIFESTS_DIR=/home/user/path/to/source/bundle \
+$ MANIFESTS_DIR=path/to/source/bundle \
 	OUTPUT_DIR=my-operator/0.3.0 CHANNELS=stable PACKAGE=my-operator \
 	generate.sh
 ```
