@@ -18,8 +18,8 @@ to create a pull request with the generated bundle changes.
 This action can be used in two ways based on the location of the source bundle
 manifests (CSV and CRD files):
 
-1. When the source bundle manifest is in the same repo, set the action input
-   `manifestsDir` to the source bundle manifest dir path as shown below:
+1. When the source bundle manifests is in the same repo, set the action input
+   `manifestsDir` to the source bundle manifests dir path as shown below:
 
 ```yaml
 on:
@@ -50,7 +50,7 @@ jobs:
 This will read the manifests from `manifestsDir` and write it to the
 `outputDir` and create a pull request with the changes.
 
-2. When the source bundle manifest is in a different repo, set the action
+2. When the source bundle manifests is in a different repo, set the action
    inputs `operatorRepo`, `operatorBranch` and `operatorManifestsDir` as shown
    below:
 
