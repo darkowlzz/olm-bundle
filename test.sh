@@ -33,6 +33,8 @@ check_file_exists () {
 }
 
 test_new_output_dir () {
+	echo "== Test if a bundle can be created in an empty bundle directory"
+
 	# Create a test operator bundle directory to be used as the output dir.
 	TEST_OUTPUT_DIR=$PWD/testdata/test-operator
 	mkdir -p $TEST_OUTPUT_DIR
@@ -60,10 +62,40 @@ test_new_output_dir () {
 	rm -rf $TEST_OUTPUT_DIR
 }
 
+test_add_new_bundle () {
+	echo "== Test if a bundle can be added to an existing bundle directory"
+
+	# Existing bundle directory.
+	TEST_OUTPUT_DIR=$PWD/testdata/memcached
+
+	export MANIFESTS_DIR=$PWD/testdata/bundle/manifests
+	export CHANNELS=stable
+	export PACKAGE=memcached
+	export OUTPUT_DIR=$TEST_OUTPUT_DIR/0.0.2
+
+	# Generate the bundle.
+	./generate.sh
+
+	# Check if the bundle directory is created.
+	WANT_BUNDLE_DIR="$TEST_OUTPUT_DIR/0.0.2"
+	check_dir_exists $WANT_BUNDLE_DIR
+
+	# Check if all the manifest files were copied.
+	check_manifests_copied $MANIFESTS_DIR $OUTPUT_DIR/manifests
+
+	# Check if dockerfile was created with the right name.
+	WANT_DOCKERFILE="$(dirname $OUTPUT_DIR)/bundle-$(basename $OUTPUT_DIR).Dockerfile"
+	check_file_exists $WANT_DOCKERFILE
+
+	# Cleanup.
+	rm -rf $OUTPUT_DIR
+	rm $WANT_DOCKERFILE
+}
+
 # Install opm.
 make opm
 sudo cp bin/opm /usr/local/bin
 
 # Run tests.
 test_new_output_dir
-
+test_add_new_bundle
