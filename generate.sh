@@ -117,6 +117,19 @@ pushd $BUNDLE_DIR
 	mv bundle.Dockerfile $DOCKERFILE_PATH
 popd
 
+# Print tree output as the action output.
+# NOTE: tree output includes backtick which causes error when printed using
+# echo. To avoid unexpected errors due to backticks, replace backtick and
+# similar special symbols with alternatives.
+t=$(tree $BUNDLE_DIR | sed 's/├/\+/g; s/─/-/g; s/└/\\/g; s/`/+/g')
+# NOTE: Github action truncates multi-line outputs. Escape the newline
+# characters.
+# Refer: https://github.community/t/set-output-truncates-multiline-strings/16852/3
+t="${t//'%'/'%25'}"
+t="${t//$'\n'/'%0A'}"
+t="${t//$'\r'/'%0D'}"
+echo -e "::set-output name=tree::$t"
+
 # Cleanup.
 if [ "$CLEANUP" = true ]; then
 	rm -rf $MANIFESTS_DIR

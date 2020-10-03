@@ -19,6 +19,9 @@ inputs:
     description: 'Operator git repo branch.'
   operatorManifestsDir:
     description: 'Manifests dir in the operator git repo.'
+outputs:
+  tree:
+    description: Tree output of the bundle.
 runs:
   using: 'docker'
   image: 'Dockerfile'

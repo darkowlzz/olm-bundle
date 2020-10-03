@@ -38,12 +38,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: olm-bundle action
+        id: bundle
         uses: darkowlzz/olm-bundle@master
         with:
           manifestsDir: bundle/manifests
           outputDir: my-operator/${{ github.event.inputs.version }}
           channels: stable,beta
           package: my-operator
+      - name: bundle tree output
+        run: echo "${{ steps.bundle.outputs.tree }}"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.4.0
 ```
@@ -71,6 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: olm-bundle action
+        id: bundle
         uses: darkowlzz/olm-bundle@master
         with:
           outputDir: my-operator/${{ github.event.inputs.version }}
@@ -79,6 +83,8 @@ jobs:
           operatorRepo: https://github.com/example/someoperator
           operatorBranch: devel
           operatorManifestsDir: bundle/manifests
+      - name: bundle tree output
+        run: echo "${{ steps.bundle.outputs.tree }}"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.4.0
 ```
@@ -98,6 +104,33 @@ create a pull request with the changes.
 | `operatorRepo` | Operator git repo that contains the OLM manifests. | `https://github.com/example/my-operator` |
 | `operatorBranch` | Operator git repo branch. | `devel` |
 | `operatorManifestsDir` | Manifests dir in the operator git repo. | `bundle/manifests` |
+
+## Action outputs
+
+### `tree`
+
+Tree view of the bundle directory after the changes:
+
+```console
+testdata/memcached
+|-- 0.0.1
+|   |-- manifests
+|   |   |-- cache.example.com_memcachedpeers.yaml
+|   |   |-- cache.example.com_memcacheds.yaml
+|   |   +-- memcached-operator.clusterserviceversion.yaml
+|   +-- metadata
+|       +-- annotations.yaml
+|-- 0.0.2
+|   |-- manifests
+|   |   |-- cache.example.com_memcachedpeers.yaml
+|   |   |-- cache.example.com_memcacheds.yaml
+|   |   +-- memcached-operator.clusterserviceversion.yaml
+|   +-- metadata
+|       +-- annotations.yaml
++-- bundle-0.0.2.Dockerfile
+
+6 directories, 9 files
+```
 
 ## Using without github actions
 

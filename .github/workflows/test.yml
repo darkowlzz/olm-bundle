@@ -8,5 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install tree
+        run: sudo apt-get install tree -y
       - name: run test.sh
         run: ./test.sh
