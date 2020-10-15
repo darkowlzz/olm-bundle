@@ -29,6 +29,7 @@ check_manifests_copied () {
 check_file_exists () {
 	if [ ! -f $1 ]; then
 		echoerr "expected $$1 to be created"
+		exit 1
 	fi
 }
 
