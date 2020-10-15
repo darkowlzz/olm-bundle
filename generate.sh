@@ -127,7 +127,7 @@ popd
 # NOTE: tree output includes backtick which causes error when printed using
 # echo. To avoid unexpected errors due to backticks, replace backtick and
 # similar special symbols with alternatives.
-t=$(tree $BUNDLE_DIR | sed 's/├/\+/g; s/─/-/g; s/└/\\/g; s/`/+/g')
+t=$(tree $OUTPUT_DIR | sed 's/├/\+/g; s/─/-/g; s/└/\\/g; s/`/+/g')
 # NOTE: Github action truncates multi-line outputs. Escape the newline
 # characters.
 # Refer: https://github.community/t/set-output-truncates-multiline-strings/16852/3
