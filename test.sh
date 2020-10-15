@@ -57,6 +57,14 @@ check_annotations () {
 	fi
 }
 
+# $1 - DOCKERFILE_LABELS_FILE - path to a file containing dockerfile labels.
+# $2 - Generated dockerfile.
+check_labels_exists () {
+	if ! cat $1 | grep -f $2; then
+		echoerr "expected Dockerfile labels in $1 not found in the generated bundle Dockerfile $2"
+	fi
+}
+
 check_file_exists () {
 	if [ ! -f $1 ]; then
 		echoerr "expected $$1 to be created"
@@ -75,6 +83,7 @@ test_new_output_dir () {
 	export DEFAULT_CHANNEL=stable
 	export PACKAGE=test-operator
 	export OUTPUT_DIR=$TEST_OUTPUT_DIR/0.0.2
+	export DOCKERFILE_LABELS_FILE=testdata/common-labels.txt
 
 	# Generate the bundle.
 	./generate.sh
@@ -93,8 +102,14 @@ test_new_output_dir () {
 	# Check if the annotations are as expected.
 	check_annotations $OUTPUT_DIR
 
+	# Check if the Dockerfile labels are appended.
+	check_labels_exists $DOCKERFILE_LABELS_FILE $WANT_DOCKERFILE
+
 	# Cleanup.
 	rm -rf $TEST_OUTPUT_DIR
+
+	unset MANIFESTS_DIR CHANNELS DEFAULT_CHANNEL PACKAGE OUTPUT_DIR \
+		DOCKERFILE_LABELS_FILE
 }
 
 test_add_new_bundle () {
@@ -108,6 +123,7 @@ test_add_new_bundle () {
 	export DEFAULT_CHANNEL=stable
 	export PACKAGE=memcached
 	export OUTPUT_DIR=$TEST_OUTPUT_DIR/0.0.2
+	export DOCKERFILE_LABELS_FILE=$PWD/testdata/common-labels.txt
 
 	# Generate the bundle.
 	./generate.sh
@@ -126,9 +142,15 @@ test_add_new_bundle () {
 	# Check if the annotations are as expected.
 	check_annotations $OUTPUT_DIR
 
+	# Check if the Dockerfile labels are appended.
+	check_labels_exists $DOCKERFILE_LABELS_FILE $WANT_DOCKERFILE
+
 	# Cleanup.
 	rm -rf $OUTPUT_DIR
 	rm $WANT_DOCKERFILE
+
+	unset MANIFESTS_DIR CHANNELS DEFAULT_CHANNEL PACKAGE OUTPUT_DIR \
+		DOCKERFILE_LABELS_FILE
 }
 
 # Install opm and yq.
