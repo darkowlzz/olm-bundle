@@ -42,8 +42,7 @@ set -e
 # 	generate.sh
 
 # TODO:
-# 1. Remove replaces field from the given CSV file.
-# 2. Support multiple channels with default channel option.
+# 1. Support multiple channels with default channel option.
 
 # Disable cleanup by default to avoid unexpected data deletion. This is only
 # enabled automatically when MANIFESTS_DIR is not used and OPERATOR_REPO is
