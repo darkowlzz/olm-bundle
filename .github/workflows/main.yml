@@ -16,5 +16,7 @@ jobs:
         outputDir: testdata/memcached/0.0.2
         channels: stable,beta
         package: memcached
+        defaultChannel: beta
+        dockerfileLabels: testdata/common-labels.txt
     - name: Tree output
       run: echo "${{ steps.bundle.outputs.tree }}"

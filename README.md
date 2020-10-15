@@ -105,6 +105,7 @@ create a pull request with the changes.
 | `operatorRepo` | Operator git repo that contains the OLM manifests. | `https://github.com/example/my-operator` |
 | `operatorBranch` | Operator git repo branch. | `devel` |
 | `operatorManifestsDir` | Manifests dir in the operator git repo. | `bundle/manifests` |
+| `dockerfileLabels` | Path to a file containing extra Dockerfile labels |
 
 ## Action outputs
 

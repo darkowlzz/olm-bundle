@@ -13,6 +13,7 @@ set -e
 # CHANNELS - Channels of the bundle. Comma separated channel names.
 # PACKAGE - OLM package name.
 # DEFAULT_CHANNEL - Default channel name (optional).
+# DOCKERFILE_LABELS_FILE - Path to a file containing extra Dockerfile labels.
 #
 # If MANIFESTS_DIR is not provided, OPERATOR_REPO, OPERATOR_BRANCH and
 # OPERATOR_MANIFESTS_DIR can be provided for cloning and extracting the metadata
@@ -41,9 +42,6 @@ set -e
 # $ MANIFESTS_DIR=/home/user/go/src/github.com/darkowlzz/bundle \
 # 	OUTPUT_DIR=my-operator/2.1.0 CHANNELS=stable PACKAGE=my-operator \
 # 	generate.sh
-
-# TODO:
-# 1. Support multiple channels with default channel option.
 
 # Disable cleanup by default to avoid unexpected data deletion. This is only
 # enabled automatically when MANIFESTS_DIR is not used and OPERATOR_REPO is
@@ -108,6 +106,11 @@ if [[ ! "$MANIFESTS_DIR" = /* ]]; then
 	MANIFESTS_DIR=$(pwd)/$MANIFESTS_DIR
 fi
 
+# If DOCKERFILE_LABELS_FILE is provided and is not absolute path, prepend PWD.
+if [[ ! -z "$DOCKERFILE_LABELS_FILE" ]] && [[ ! "$DOCKERFILE_LABELS_FILE" = /* ]] ; then
+	DOCKERFILE_LABELS_FILE=$(pwd)/$DOCKERFILE_LABELS_FILE
+fi
+
 VERSION="$(basename $OUTPUT_DIR)"
 BUNDLE_DIR="$(dirname $OUTPUT_DIR)"
 DOCKERFILE_PATH="bundle-$VERSION.Dockerfile"
@@ -121,6 +124,11 @@ pushd $BUNDLE_DIR
 		--default $DEFAULT_CHANNEL
 	echo "Renaming bundle.Dockerfile to $DOCKERFILE_PATH"
 	mv bundle.Dockerfile $DOCKERFILE_PATH
+	# Append the dockerfile labels file content to the generated
+	# dockerfile.
+	if [ ! -z "$DOCKERFILE_LABELS_FILE" ]; then
+		cat $DOCKERFILE_LABELS_FILE >> $DOCKERFILE_PATH
+	fi
 popd
 
 # Print tree output as the action output.

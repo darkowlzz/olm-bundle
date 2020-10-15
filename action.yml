@@ -24,6 +24,8 @@ inputs:
     description: 'Operator git repo branch.'
   operatorManifestsDir:
     description: 'Manifests dir in the operator git repo.'
+  dockerfileLabels:
+    description: 'Path to a file containing extra Dockerfile labels.'
 outputs:
   tree:
     description: Tree output of the generated bundle.
@@ -39,3 +41,4 @@ runs:
     OPERATOR_REPO: ${{ inputs.operatorRepo }}
     OPERATOR_BRANCH: ${{ inputs.operatorBranch }}
     OPERATOR_MANIFESTS_DIR: ${{ inputs.operatorManifestsDir }}
+    DOCKERFILE_LABELS_FILE: ${{ inputs.dockerfileLabels }}
