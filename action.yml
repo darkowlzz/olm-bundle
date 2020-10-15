@@ -13,6 +13,8 @@ inputs:
     description: 'Channels of the bundle. Comma separated channel names.'
     required: true
     default: stable
+  defaultChannel:
+    description: 'Name of the default channel.'
   package:
     description: 'OLM package name.'
     required: true
@@ -32,6 +34,7 @@ runs:
     MANIFESTS_DIR: ${{ inputs.manifestsDir }}
     OUTPUT_DIR: ${{ inputs.outputDir }}
     CHANNELS: ${{ inputs.channels }}
+    DEFAULT_CHANNEL: ${{ inputs.defaultChannel }}
     PACKAGE: ${{ inputs.package }}
     OPERATOR_REPO: ${{ inputs.operatorRepo }}
     OPERATOR_BRANCH: ${{ inputs.operatorBranch }}

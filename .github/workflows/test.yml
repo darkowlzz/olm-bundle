@@ -11,4 +11,4 @@ jobs:
       - name: Install tree
         run: sudo apt-get install tree -y
       - name: run test.sh
-        run: ./test.sh
+        run: make test

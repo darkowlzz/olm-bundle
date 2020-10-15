@@ -12,6 +12,7 @@ set -e
 # OUTPUT_DIR - Bundle version directory. Created if not exists.
 # CHANNELS - Channels of the bundle. Comma separated channel names.
 # PACKAGE - OLM package name.
+# DEFAULT_CHANNEL - Default channel name (optional).
 #
 # If MANIFESTS_DIR is not provided, OPERATOR_REPO, OPERATOR_BRANCH and
 # OPERATOR_MANIFESTS_DIR can be provided for cloning and extracting the metadata
@@ -42,8 +43,7 @@ set -e
 # 	generate.sh
 
 # TODO:
-# 1. Remove replaces field from the given CSV file.
-# 2. Support multiple channels with default channel option.
+# 1. Support multiple channels with default channel option.
 
 # Disable cleanup by default to avoid unexpected data deletion. This is only
 # enabled automatically when MANIFESTS_DIR is not used and OPERATOR_REPO is
@@ -98,6 +98,11 @@ if [ -z "$PACKAGE" ]; then
 	exit 1
 fi
 
+# If no default channel is set, use stable.
+if [ -z "$DEFAULT_CHANNEL" ]; then
+	DEFAULT_CHANNEL=stable
+fi
+
 # If MANIFESTS_DIR is not absolute path, prepend PWD to make it absolute.
 if [[ ! "$MANIFESTS_DIR" = /* ]]; then
 	MANIFESTS_DIR=$(pwd)/$MANIFESTS_DIR
@@ -112,7 +117,8 @@ pushd $BUNDLE_DIR
 	echo "Generating bundle at $OUTPUT_DIR ..."
 	opm alpha bundle generate -d $MANIFESTS_DIR -u $VERSION \
 		--channels $CHANNELS \
-		--package $PACKAGE
+		--package $PACKAGE \
+		--default $DEFAULT_CHANNEL
 	echo "Renaming bundle.Dockerfile to $DOCKERFILE_PATH"
 	mv bundle.Dockerfile $DOCKERFILE_PATH
 popd
