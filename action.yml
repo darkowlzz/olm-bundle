@@ -26,7 +26,7 @@ inputs:
     description: 'Manifests dir in the operator git repo.'
 outputs:
   tree:
-    description: Tree output of the bundle.
+    description: Tree output of the generated bundle.
 runs:
   using: 'docker'
   image: 'Dockerfile'

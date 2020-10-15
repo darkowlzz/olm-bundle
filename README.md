@@ -100,6 +100,7 @@ create a pull request with the changes.
 | `manifestsDir` | Directory containing all the CRDs and CSVs for a bundle. | `bundle/manifests` |
 | `outputDir` | Bundle version directory. Created if not exists. | `my-operator/0.3.0` |
 | `channels` | Channels of the bundle. Comma separated channel names. | `stable` |
+| `defaultChannel` | Default bundle channel name (optional, `stable` by default). | `stable` |
 | `package` | OLM package name. | `my-operator` |
 | `operatorRepo` | Operator git repo that contains the OLM manifests. | `https://github.com/example/my-operator` |
 | `operatorBranch` | Operator git repo branch. | `devel` |
@@ -109,27 +110,18 @@ create a pull request with the changes.
 
 ### `tree`
 
-Tree view of the bundle directory after the changes:
+Tree view of the versioned bundle directory after the changes:
 
 ```console
-testdata/memcached
-|-- 0.0.1
-|   |-- manifests
-|   |   |-- cache.example.com_memcachedpeers.yaml
-|   |   |-- cache.example.com_memcacheds.yaml
-|   |   +-- memcached-operator.clusterserviceversion.yaml
-|   +-- metadata
-|       +-- annotations.yaml
-|-- 0.0.2
-|   |-- manifests
-|   |   |-- cache.example.com_memcachedpeers.yaml
-|   |   |-- cache.example.com_memcacheds.yaml
-|   |   +-- memcached-operator.clusterserviceversion.yaml
-|   +-- metadata
-|       +-- annotations.yaml
-+-- bundle-0.0.2.Dockerfile
+testdata/memcached/0.0.2
+|-- manifests
+|   |-- cache.example.com_memcachedpeers.yaml
+|   |-- cache.example.com_memcacheds.yaml
+|   +-- memcached-operator.clusterserviceversion.yaml
++-- metadata
+    +-- annotations.yaml
 
-6 directories, 9 files
+2 directories, 4 files
 ```
 
 ## Using without github actions
